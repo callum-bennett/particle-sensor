@@ -1,6 +1,5 @@
 from pms5003 import PMS5003
 import time
-from datetime import datetime, timezone
 
 class ParticleSensor:
     def __init__(self, clientId, device="/dev/ttyAMA0", baudrate=9600, pin_enable="GPIO22", pin_reset="GPIO27"):
@@ -12,7 +11,7 @@ class ParticleSensor:
 
         return {
             'deviceId': self.deviceId,
-            'timestamp': datetime.now(tz=timezone.utc).isoformat() + 'Z',
+            'timestamp': int(time.time() * 1000),
             'pm1_0': data.pm_ug_per_m3(1.0),
             'pm2_5': data.pm_ug_per_m3(2.5),
             'pm10': data.pm_ug_per_m3(10),
