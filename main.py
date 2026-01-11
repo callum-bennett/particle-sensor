@@ -17,7 +17,7 @@ BATCH_SIZE = int(os.getenv("BATCH_SIZE", 10))
 BATCH_INTERVAL = int(os.getenv("BATCH_INTERVAL", 300))
 READ_INTERVAL = float(os.getenv("READ_INTERVAL", 1))
 
-sensor = ParticleSensor()
+sensor = ParticleSensor(CLIENT_ID)
 aws_client = AWSIoTClient(AWS_ENDPOINT, CLIENT_ID, TOPIC, ROOT_CA, CERTFILE, KEYFILE)
 
 batch = []

@@ -3,13 +3,15 @@ import time
 from datetime import datetime, timezone
 
 class ParticleSensor:
-    def __init__(self, device="/dev/ttyAMA0", baudrate=9600, pin_enable="GPIO22", pin_reset="GPIO27"):
+    def __init__(self, clientId, device="/dev/ttyAMA0", baudrate=9600, pin_enable="GPIO22", pin_reset="GPIO27"):
+        self.deviceId = clientId
         self.sensor = PMS5003(device=device, baudrate=baudrate, pin_enable=pin_enable, pin_reset=pin_reset)
 
     def read(self):
         data = self.sensor.read()
 
         return {
+            'deviceId': self.deviceId,
             'timestamp': datetime.now(tz=timezone.utc).isoformat() + 'Z',
             'pm1_0': data.pm_ug_per_m3(1.0),
             'pm2_5': data.pm_ug_per_m3(2.5),
