@@ -1,9 +1,21 @@
 import time
 import json
 import os
+import fcntl
+import sys
 from dotenv import load_dotenv
 from mqtt_client import AWSIoTClient
 from particle_sensor import ParticleSensor
+
+
+lock_file = "/tmp/main.lock"
+fp = open(lock_file, "w")
+
+try:
+    fcntl.flock(fp, fcntl.LOCK_EX | fcntl.LOCK_NB)
+except BlockingIOError:
+    print("Another instance is already running")
+    sys.exit(0)
 
 load_dotenv()
 
